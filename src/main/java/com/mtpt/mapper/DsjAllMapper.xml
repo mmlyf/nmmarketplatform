@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtpt.dao.DsjAllMapper">
+  <resultMap id="BaseResultMap" type="com.mtpt.bean.DsjAll">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="dx_dn" jdbcType="VARCHAR" property="dxDn" />
+    <result column="dx_city" jdbcType="VARCHAR" property="dxCity" />
+    <result column="dx_sys" jdbcType="VARCHAR" property="dxSys" />
+    <result column="dx_firp" jdbcType="VARCHAR" property="dxFirp" />
+    <result column="dx_firdw" jdbcType="VARCHAR" property="dxFirdw" />
+    <result column="addtime" jdbcType="TIMESTAMP" property="addtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, dx_dn, dx_city, dx_sys, dx_firp, dx_firdw, addtime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dsj_all
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectDataByPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"/>
+  	from dsj_all
+  	where dx_dn=#{phone}
+  	ORDER BY addtime DESC
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from dsj_all
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mtpt.bean.DsjAll">
+    insert into dsj_all (id, dx_dn, dx_city, 
+      dx_sys, dx_firp, dx_firdw, 
+      addtime)
+    values (#{id,jdbcType=INTEGER}, #{dxDn,jdbcType=VARCHAR}, #{dxCity,jdbcType=VARCHAR}, 
+      #{dxSys,jdbcType=VARCHAR}, #{dxFirp,jdbcType=VARCHAR}, #{dxFirdw,jdbcType=VARCHAR}, 
+      #{addtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mtpt.bean.DsjAll">
+    insert into dsj_all
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="dxDn != null">
+        dx_dn,
+      </if>
+      <if test="dxCity != null">
+        dx_city,
+      </if>
+      <if test="dxSys != null">
+        dx_sys,
+      </if>
+      <if test="dxFirp != null">
+        dx_firp,
+      </if>
+      <if test="dxFirdw != null">
+        dx_firdw,
+      </if>
+      <if test="addtime != null">
+        addtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="dxDn != null">
+        #{dxDn,jdbcType=VARCHAR},
+      </if>
+      <if test="dxCity != null">
+        #{dxCity,jdbcType=VARCHAR},
+      </if>
+      <if test="dxSys != null">
+        #{dxSys,jdbcType=VARCHAR},
+      </if>
+      <if test="dxFirp != null">
+        #{dxFirp,jdbcType=VARCHAR},
+      </if>
+      <if test="dxFirdw != null">
+        #{dxFirdw,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null">
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mtpt.bean.DsjAll">
+    update dsj_all
+    <set>
+      <if test="dxDn != null">
+        dx_dn = #{dxDn,jdbcType=VARCHAR},
+      </if>
+      <if test="dxCity != null">
+        dx_city = #{dxCity,jdbcType=VARCHAR},
+      </if>
+      <if test="dxSys != null">
+        dx_sys = #{dxSys,jdbcType=VARCHAR},
+      </if>
+      <if test="dxFirp != null">
+        dx_firp = #{dxFirp,jdbcType=VARCHAR},
+      </if>
+      <if test="dxFirdw != null">
+        dx_firdw = #{dxFirdw,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null">
+        addtime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mtpt.bean.DsjAll">
+    update dsj_all
+    set dx_dn = #{dxDn,jdbcType=VARCHAR},
+      dx_city = #{dxCity,jdbcType=VARCHAR},
+      dx_sys = #{dxSys,jdbcType=VARCHAR},
+      dx_firp = #{dxFirp,jdbcType=VARCHAR},
+      dx_firdw = #{dxFirdw,jdbcType=VARCHAR},
+      addtime = #{addtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtpt.dao.UpInstruMapper">
+  <resultMap id="BaseResultMap" type="com.mtpt.bean.UpInstru">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="mo_order" jdbcType="VARCHAR" property="moOrder" />
+    <result column="product" jdbcType="VARCHAR" property="product" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, mo_order, product
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from up_instru
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectAllForInstruct" resultType="java.lang.String">
+  	select mo_order
+  	from up_instru
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from up_instru
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mtpt.bean.UpInstru">
+    insert into up_instru (id, mo_order, product
+      )
+    values (#{id,jdbcType=INTEGER}, #{moOrder,jdbcType=VARCHAR}, #{product,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mtpt.bean.UpInstru">
+    insert into up_instru
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="moOrder != null">
+        mo_order,
+      </if>
+      <if test="product != null">
+        product,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="moOrder != null">
+        #{moOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="product != null">
+        #{product,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mtpt.bean.UpInstru">
+    update up_instru
+    <set>
+      <if test="moOrder != null">
+        mo_order = #{moOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="product != null">
+        product = #{product,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mtpt.bean.UpInstru">
+    update up_instru
+    set mo_order = #{moOrder,jdbcType=VARCHAR},
+      product = #{product,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

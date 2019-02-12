@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtpt.dao.DsjBookDataMapper">
+  <resultMap id="BaseResultMap" type="com.mtpt.bean.DsjBookData">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="dn" jdbcType="VARCHAR" property="dn" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="mt_time" jdbcType="TIMESTAMP" property="mtTime" />
+    <result column="mo_time" jdbcType="TIMESTAMP" property="moTime" />
+    <result column="mo_message" jdbcType="VARCHAR" property="moMessage" />
+    <result column="firp" jdbcType="VARCHAR" property="firp" />
+    <result column="firdw" jdbcType="VARCHAR" property="firdw" />
+    <result column="systype" jdbcType="VARCHAR" property="systype" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="msgid" jdbcType="INTEGER" property="msgid" />
+    <result column="datafrom" jdbcType="INTEGER" property="datafrom" />
+    <result column="addtime" jdbcType="TIMESTAMP" property="addtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, dn, state, mt_time, mo_time, mo_message, firp, firdw, systype, city, msgid, datafrom, addtime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dsj_bookdata
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectDsjBookDataByPage" parameterType="com.mtpt.bean.page.DsjBookPage" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List"/>
+  	from dsj_bookdata
+  	<where>
+  		<if test="dn!=null and dn!=''">
+  			AND dn like '%${dn}%'
+  		</if>
+  		<if test="busdate_star!=null and busdate_end!=null and busdate_star!='' and busdate_end!=''">
+  			AND mt_time <![CDATA[>=]]> #{busdate_star} AND mt_time <![CDATA[<=]]> #{busdate_end} 
+  		</if>
+  		<if test="modate_star!=null and modate_end!=null and modate_star!='' and modate_end!=''">
+  			AND mo_time <![CDATA[>=]]> #{modate_star} AND mo_time <![CDATA[<=]]> #{modate_end}
+  		</if>
+  		<if test="qudao!=null and qudao!=''">
+  			AND	datafrom = #{qudao}
+  		</if>
+  		<if test="dangw!=null and dangw!=''">
+  			AND firdw = #{dangw}
+  		</if>
+  		<if test="city!=null and city!=''">
+  			AND city = #{city}
+  		</if>
+  	</where>
+  	ORDER BY addtime DESC
+  	LIMIT #{start},#{limit}
+  </select>
+  
+   <select id="selectDsjBookCountByPage" parameterType="com.mtpt.bean.page.DsjBookPage" resultType="java.lang.Integer">
+  	select count(1)
+  	from dsj_bookdata
+  	<where>
+  		<if test="dn!=null and dn!=''">
+  			AND dn like '%${dn}%'
+  		</if>
+  		<if test="busdate_star!=null and busdate_end!=null and busdate_star!='' and busdate_end!=''">
+  			AND mt_time <![CDATA[>=]]> #{busdate_star} AND mt_time <![CDATA[<=]]> #{busdate_end} 
+  		</if>
+  		<if test="modate_star!=null and modate_end!=null and modate_star!='' and modate_end!=''">
+  			AND mo_time <![CDATA[>=]]> #{modate_star} AND mo_time <![CDATA[<=]]> #{modate_end}
+  		</if>
+  		<if test="qudao!=null and qudao!=''">
+  			AND	datafrom = #{qudao}
+  		</if>
+  		<if test="dangw!=null and dangw!=''">
+  			AND firdw = #{dangw}
+  		</if>
+  		<if test="city!=null and city!=''">
+  			AND city = #{city}
+  		</if>
+  	</where>
+  	ORDER BY addtime DESC
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from dsj_bookdata
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mtpt.bean.DsjBookData">
+    insert into dsj_bookdata (id, dn, state, 
+      mt_time, mo_time, mo_message, 
+      firp, firdw, systype, 
+      city, msgid, datafrom, addtime
+      )
+    values (#{id,jdbcType=INTEGER}, #{dn,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
+      #{mtTime,jdbcType=TIMESTAMP}, #{moTime,jdbcType=TIMESTAMP}, #{moMessage,jdbcType=VARCHAR}, 
+      #{firp,jdbcType=VARCHAR}, #{firdw,jdbcType=VARCHAR}, #{systype,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{msgid,jdbcType=INTEGER}, #{datafrom,jdbcType=INTEGER}, #{addtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mtpt.bean.DsjBookData">
+    insert into dsj_bookdata
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="dn != null">
+        dn,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="mtTime != null">
+        mt_time,
+      </if>
+      <if test="moTime != null">
+        mo_time,
+      </if>
+      <if test="moMessage != null">
+        mo_message,
+      </if>
+      <if test="firp != null">
+        firp,
+      </if>
+      <if test="firdw != null">
+        firdw,
+      </if>
+      <if test="systype != null">
+        systype,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="msgid != null">
+        msgid,
+      </if>
+      <if test="datafrom != null">
+      	datafrom,
+      </if>
+      <if test="addtime != null">
+        addtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="dn != null">
+        #{dn,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="mtTime != null">
+        #{mtTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="moTime != null">
+        #{moTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="moMessage != null">
+        #{moMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="firp != null">
+        #{firp,jdbcType=VARCHAR},
+      </if>
+      <if test="firdw != null">
+        #{firdw,jdbcType=VARCHAR},
+      </if>
+      <if test="systype != null">
+        #{systype,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="msgid != null">
+        #{msgid,jdbcType=INTEGER},
+      </if>
+      <if test="datafrom != null">
+        #{datafrom,jdbcType=INTEGER},
+      </if>
+      <if test="addtime != null">
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mtpt.bean.DsjBookData">
+    update dsj_bookdata
+    <set>
+      <if test="dn != null">
+        dn = #{dn,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="mtTime != null">
+        mt_time = #{mtTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="moTime != null">
+        mo_time = #{moTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="moMessage != null">
+        mo_message = #{moMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="firp != null">
+        firp = #{firp,jdbcType=VARCHAR},
+      </if>
+      <if test="firdw != null">
+        firdw = #{firdw,jdbcType=VARCHAR},
+      </if>
+      <if test="systype != null">
+        systype = #{systype,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="msgid != null">
+        msgid = #{msgid,jdbcType=INTEGER},
+      </if>
+      <if test="datafrom != null">
+      	datafrom = #{datafrom,jdbcType=INTEGER}
+      </if>
+      <if test="addtime != null">
+        addtime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mtpt.bean.DsjBookData">
+    update dsj_bookdata
+    set dn = #{dn,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      mt_time = #{mtTime,jdbcType=TIMESTAMP},
+      mo_time = #{moTime,jdbcType=TIMESTAMP},
+      mo_message = #{moMessage,jdbcType=VARCHAR},
+      firp = #{firp,jdbcType=VARCHAR},
+      firdw = #{firdw,jdbcType=VARCHAR},
+      systype = #{systype,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      msgid = #{msgid,jdbcType=INTEGER},
+      datafrom = #{datafrom,jdbcType=INTEGER},
+      addtime = #{addtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

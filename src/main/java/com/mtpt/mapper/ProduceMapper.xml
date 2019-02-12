@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtpt.dao.ProduceMapper">
+	<select id="selectModelCount" parameterType="com.mtpt.bean.Review" resultType="java.lang.Integer">
+		{CALL selectnmcount(
+			#{dangw,jdbcType=VARCHAR,mode=IN},
+			#{product,jdbcType=VARCHAR,mode=IN},
+			#{city,jdbcType=VARCHAR,mode=IN},
+			#{sourceType,jdbcType=VARCHAR,mode=IN},
+			#{secTime,jdbcType=VARCHAR,mode=IN}
+		)}
+	</select>
+	
+	<select id="selectThreeday" parameterType="com.mtpt.bean.RepeatOpera" resultType="java.lang.String">
+		{CALL selectthreeday(
+			#{datain,jdbcType=VARCHAR,mode=IN},
+			#{days,jdbcType=INTEGER,mode=IN}
+		)}
+	</select>
+	
+</mapper>
